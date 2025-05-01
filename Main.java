@@ -57,12 +57,12 @@ public static String[] java = {
                     break;
                 case "3":
                     // Design.clearScreen();
-                    Design.printDesign(Design.BOLD, Design.RED, tab, "Exiting the program...\n", Design.RESET);
+                    Design.printDesign(Design.UNDERLINE, Design.BLUE, tab, "Exiting the program...\n\n", Design.RESET);
                     Design.sleep(1f);
                     System.exit(0);
                 default:
-                    Design.printDesign(Design.ITALIC, Design.STRIKETHROUGH, "Invalid choice. ", Design.RESET, Design.ITALIC, Design.PURPLE, "Please try again.\n");
-                    Design.sleep(1.3f);
+                    Design.printDesign(Design.ITALIC, Design.STRIKETHROUGH, tab, "Invalid choice. ", Design.RESET, Design.ITALIC, Design.PURPLE, "Please try again.\n");
+                    Design.sleep(.4f);
             }
         }   
     }
