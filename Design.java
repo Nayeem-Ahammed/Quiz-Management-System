@@ -63,12 +63,6 @@ public class Design {
         }
     }
 
-    // Print colored and styled text
-    public static void colorPrint(String color, String text) {
-        System.out.print(color + text + RESET);
-    }
-
-    
     // Print custom text
     public static void printDesign(String... elements) {
         for(String element : elements) {
