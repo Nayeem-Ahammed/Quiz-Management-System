@@ -79,7 +79,7 @@ public class Main {
         String name = input.nextLine();
         Design.printDesign(tab, Design.ITALIC, Design.WHITE, "Enter password: ", Design.RESET);
         String password = input.nextLine();
-        Design.printDesign(tab, Design.ITALIC, Design.WHITE, "Enter role (admin/user): ", Design.RESET);
+        Design.printDesign(tab, Design.ITALIC, Design.WHITE, "Enter role (admin/student): ", Design.RESET);
         String role = input.nextLine();
 
         // check if the user already exists
@@ -126,6 +126,7 @@ public class Main {
 
 
     // Admin panel
+
     private static void AdminPanel(Scanner input) {
         
         while (true) { 
@@ -159,6 +160,11 @@ public class Main {
     }
 
     // Student panel
+    /*
+     * 1. View Quizzes
+     * 2. Take Quiz
+     * 3. Logout
+     */
     private static  void StudentPanel(Scanner input) {
 
         Design.clearScreen();
