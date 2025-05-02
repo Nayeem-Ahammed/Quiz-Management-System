@@ -112,7 +112,6 @@ public class Design {
             // text += Design.RESET;
             System.out.print(text);
         }
-    }
-    
+    } 
     
 }
