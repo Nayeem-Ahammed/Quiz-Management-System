@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.util.Scanner;
 /*
  * 1. clearScreen() - Clears the console screen.
  * 2. pause() - Waits for the user to press Enter.
@@ -48,16 +49,9 @@ public class Design {
     }
 
     // Wait for user to press Enter
-    public static void pause() {
-        printDesign(Main.tab, YELLOW,  "Press Enter to continue...", RESET);
-        try {
-            System.in.read();
-            while (System.in.available() > 0) {
-                System.in.read(); // Clear the input buffer
-            }
-        } catch (IOException e) {
-            System.out.println("Error waiting for Enter: " + e.getMessage());
-        }
+    public static void pause(Scanner input) {
+        printDesign(Main.tab(), YELLOW,  "Press Enter to continue...", RESET);
+        input.nextLine();
     }
     
 
