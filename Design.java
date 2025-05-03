@@ -1,6 +1,14 @@
 
-import java.io.IOException;
-
+import java.io.*;
+import java.util.Scanner;
+/*
+ * 1. clearScreen() - Clears the console screen.
+ * 2. pause() - Waits for the user to press Enter.
+ * 3. sleep(float seconds) - Pauses the program for a specified number of seconds.
+ * 4. printDesign(String... elements) - Prints custom text with ANSI color codes.
+ * 5. width() - Returns the width of the terminal.
+ * 6. height() - Returns the height of the terminal.
+ */
 
 
 public class Design {
@@ -41,16 +49,9 @@ public class Design {
     }
 
     // Wait for user to press Enter
-    public static void pause() {
-        System.out.print("Press Enter to continue...");
-        try {
-            System.in.read();
-            while (System.in.available() > 0) {
-                System.in.read(); // Clear the input buffer
-            }
-        } catch (IOException e) {
-            System.out.println("Error waiting for Enter: " + e.getMessage());
-        }
+    public static void pause(Scanner input) {
+        printDesign(Main.tab(), YELLOW,  "Press Enter to continue...", RESET);
+        input.nextLine();
     }
     
 
@@ -63,12 +64,7 @@ public class Design {
         }
     }
 
-    // Print colored and styled text
-    public static void colorPrint(String color, String text) {
-        System.out.print(color + text + RESET);
-    }
 
-    
     // Print custom text
     public static void printDesign(String... elements) {
         for(String element : elements) {
@@ -118,7 +114,62 @@ public class Design {
             // text += Design.RESET;
             System.out.print(text);
         }
+    } 
+
+
+
+    public static int width() {
+        return getTerminalSize()[0];
     }
-    
-    
+    public static int height() {
+        return getTerminalSize()[1];
+    }
+    private  static int[] getTerminalSize() {
+        String os = System.getProperty("os.name").toLowerCase();
+        if(os.contains("win")) {
+            return getWindowsTerminalSize();
+        } else {
+            return getLinuxTerminalSize();
+        }
+    }
+    // for windows
+    private static int[] getWindowsTerminalSize() {
+        int[] size = {-1, -1};
+        try {
+            Process process = new ProcessBuilder("cmd", "/c", "mode con").start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Columns")) {
+                    size[0] = Integer.parseInt(line.replaceAll("\\D", ""));
+                } else if (line.startsWith("Lines")) {
+                    size[1] = Integer.parseInt(line.replaceAll("\\D", ""));
+                }
+            }
+            reader.close();
+            process.waitFor();
+        } catch (Exception e) {
+            System.out.println("Error getting terminal size: " + e.getMessage());
+        }
+        return size;
+    }
+    // for linux or mac
+    private static int[] getLinuxTerminalSize() {
+        int[] size = {-1, -1};
+        try {
+            Process process = new ProcessBuilder("sh", "-c", "stty size </dev/tty").start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = reader.readLine();
+            if (line != null && line.matches("\\d+ \\d+")) {
+                String[] parts = line.split(" ");
+                size[0] = Integer.parseInt(parts[1]);
+                size[1] = Integer.parseInt(parts[0]);
+            }
+            reader.close();
+            process.waitFor();
+        } catch (Exception e) {
+            System.out.println("Error getting terminal size: " + e.getMessage());
+        }
+        return size;
+    }
 }
